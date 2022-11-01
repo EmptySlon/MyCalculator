@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
 
     tools:context=".MainActivity">
 
@@ -11,7 +12,6 @@
         android:id="@+id/listCalculation"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
         app:layout_constraintBottom_toTopOf="@id/txAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,28 +21,32 @@
         android:id="@+id/txAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:background="@drawable/edit_text_style"
+        android:background="@drawable/edit_text_style_red"
         android:gravity="end"
+        android:paddingStart="3dp"
+        android:layout_marginBottom="3dp"
+        android:visibility="gone"
+
+
+        android:paddingEnd="3dp"
         android:textSize="30sp"
-        android:foregroundGravity="left"
-
         app:layout_constraintBottom_toTopOf="@id/txCalculation"
-        app:layout_constraintEnd_toEndOf="@+id/txCalculation"
-
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listCalculation" />
 
     <com.example.mycalculator.model.CustomEditText
         android:id="@+id/txCalculation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:imeOptions="actionNone"
 
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         android:background="@drawable/edit_text_style"
-
         android:inputType="none"
+        android:paddingStart="3dp"
+
+        android:paddingEnd="3dp"
         android:textIsSelectable="true"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/tlButtonBlock"
@@ -56,64 +60,64 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/listCalculation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/listCalculation"
-
-
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        >
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
 
             android:gravity="center">
 
             <ImageButton
                 android:id="@+id/btDelete"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+
+
                 android:backgroundTint="@color/red"
+                android:scaleX="1.1"
                 android:src="@drawable/ic_baseline_arrow_back"
                 android:textSize="25sp" />
 
             <Button
                 android:id="@+id/btRightBracket"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/LeftBracket"
                 android:textSize="30sp" />
 
             <Button
                 android:id="@+id/btLeftBracket"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/RightBracket"
                 android:textSize="30sp" />
 
             <Button
                 android:id="@+id/btDivision"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/Division"
                 android:textSize="30sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
 
             android:gravity="center">
 
             <Button
                 android:id="@+id/bt1"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
                 android:backgroundTint="@color/purple_200"
                 android:text="@string/_1"
                 android:textSize="30sp" />
@@ -121,8 +125,8 @@
             <Button
                 android:id="@+id/bt2"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_2"
@@ -131,8 +135,8 @@
             <Button
                 android:id="@+id/bt3"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_3"
@@ -141,8 +145,8 @@
             <Button
                 android:id="@+id/btMultiplication"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/x"
                 android:textSize="30sp" />
         </TableRow>
@@ -156,8 +160,7 @@
             <Button
                 android:id="@+id/bt4"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_4"
@@ -166,8 +169,8 @@
             <Button
                 android:id="@+id/bt5"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_5"
@@ -176,9 +179,9 @@
             <Button
                 android:id="@+id/bt6"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="match_parent"
 
-                android:layout_margin="4dp"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
                 android:text="@string/_6"
                 android:textSize="30sp" />
@@ -187,8 +190,8 @@
                 android:id="@+id/btSubtraction"
                 android:layout_width="match_parent"
 
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/Subtraction"
                 android:textSize="30sp" />
 
@@ -203,8 +206,7 @@
             <Button
                 android:id="@+id/bt7"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_7"
@@ -213,8 +215,8 @@
             <Button
                 android:id="@+id/bt8"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_8"
@@ -223,8 +225,8 @@
             <Button
                 android:id="@+id/bt9"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_9"
@@ -233,8 +235,8 @@
             <Button
                 android:id="@+id/btAdd"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/Add"
                 android:textSize="30sp" />
         </TableRow>
@@ -248,16 +250,15 @@
             <Button
                 android:id="@+id/btCopy"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
                 android:text="@string/Copy"
                 android:textSize="30sp" />
 
             <Button
                 android:id="@+id/bt0"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="@color/purple_200"
 
                 android:text="@string/_0"
@@ -266,16 +267,16 @@
             <Button
                 android:id="@+id/btComma"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/point"
                 android:textSize="30sp" />
 
             <Button
                 android:id="@+id/btEquals"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
                 android:text="@string/equals"
                 android:textSize="30sp" />
         </TableRow>
