@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:gravity="end"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <TextView
         android:id="@+id/txEquation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:textSize="17sp"
         android:padding="3dp"
         android:background="@drawable/edit_text_style"
         android:textAlignment="viewEnd"
-        tools:text="100+700+100+700+100+700+100++100+700+100+700+100++100+700+100+700+100+700+100+700+100+700="
+        tools:text="100"
         />
 
     <TextView
+        android:id="@+id/txAnswer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

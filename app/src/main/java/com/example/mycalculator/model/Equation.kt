@@ -110,19 +110,21 @@ class Equation(var equation: String = "") {
     }
 
     fun calculateAnswer(): String {
+        var tempEquation = equation
         try {
-            while (equation.contains(Regex("\\("))) {
+            while (tempEquation.contains(Regex("\\("))) {
                 var temporalEquation =
-                    equation
-                        .dropLast(equation.length - equation.indexOf(')'))
+                    tempEquation
+                        .dropLast(tempEquation.length - tempEquation.indexOf(')'))
                         .let { it.drop(it.lastIndexOf("(") + 1) }
                 val answerEquation = simpleCalculate(temporalEquation)
                 println("$temporalEquation = $answerEquation")
-                equation = equation.replace("(${temporalEquation})", answerEquation)
+                tempEquation = tempEquation.replace("(${temporalEquation})", answerEquation)
             }
-            equation = simpleCalculate(equation)
-            return equation
+            answer = simpleCalculate(tempEquation)
+            return answer
         } catch (e: Exception) {
+            isCorrectEquation = false
             return "NaN"
         }
     }

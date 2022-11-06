@@ -9,8 +9,10 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycalculator.databinding.ActivityMainBinding
 import com.example.mycalculator.model.Equation
 import com.example.mycalculator.model.CustomEditText
@@ -28,7 +30,14 @@ class MainActivity : AppCompatActivity() {
         var textEd = binding.txCalculation.text.toString()
         val equation = Equation(textEd)
         var startCursorPosition = binding.txCalculation.selectionStart
-        var cursorPosition = binding.txCalculation.selectionEnd
+        var cursorPosition: Int
+
+        val listEquation = mutableListOf<Equation>()
+        val recyclerEquation = binding.listCalculation
+        val equationsAdapter = EquationRecyclerAdapter(listEquation)
+        equationsAdapter.notifyDataSetChanged()
+        recyclerEquation.layoutManager = LinearLayoutManager(this)
+        recyclerEquation.adapter = equationsAdapter
 
         fun deleteSpace(equation: String): String = equation.filter { it != ' ' }
 
@@ -152,6 +161,15 @@ class MainActivity : AppCompatActivity() {
                 binding.txCalculation.setSelection(addSpaceToString(textEd).length)
                 binding.txCalculation.isCursorVisible = false
                 binding.txCalculation.clearFocus()
+                equation.equation = textEd
+                equation.calculateAnswer()
+                if (equation.isCorrectEquation) {
+                    listEquation.add(0, Equation(textEd))
+//                    equationsAdapter.equations = listEquation
+//
+                    recyclerEquation.adapter = EquationRecyclerAdapter(listEquation)
+
+                }
             }
 
             btDelete.setOnClickListener {
@@ -173,7 +191,7 @@ class MainActivity : AppCompatActivity() {
                 textEd = ""
                 binding.txCalculation.setText(textEd)
                 binding.txAnswer.text = textEd
-                binding.txAnswer.visibility =TextView.GONE
+                binding.txAnswer.visibility = TextView.GONE
                 true
             }
             txCalculation.setOnFocusChangeListener { v, hasFocus ->
