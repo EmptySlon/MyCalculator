@@ -1,10 +1,9 @@
 package com.example.mycalculator.model
 
 import java.math.BigDecimal
-import java.math.MathContext
 import java.math.RoundingMode
 
-class Equation(var equation: String = "") {
+class EquationOld(var equation: String = "") {
 
     var answer: String = ""
     var isCorrectEquation = (equation.count { it == '(' } == equation.count { it == ')' })

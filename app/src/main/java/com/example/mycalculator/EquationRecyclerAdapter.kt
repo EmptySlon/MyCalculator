@@ -1,16 +1,13 @@
 package com.example.mycalculator
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mycalculator.databinding.ActivityMainBinding
 import com.example.mycalculator.databinding.ItemEquationBinding
-import com.example.mycalculator.model.Equation
+import com.example.mycalculator.model.EquationOld
 
 
-class EquationRecyclerAdapter(var equations: List<Equation>) :
+class EquationRecyclerAdapter(var equationOlds: List<EquationOld>) :
     RecyclerView.Adapter<EquationRecyclerAdapter.MyViewHolder>() {
     inner class MyViewHolder(val binding:  ItemEquationBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -21,7 +18,7 @@ class EquationRecyclerAdapter(var equations: List<Equation>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val equation = equations[position]
+        val equation = equationOlds[position]
         with(holder.binding){
             txEquation.text = "${equation.equation}="
             txAnswer.text = equation.calculateAnswer()
@@ -31,6 +28,6 @@ class EquationRecyclerAdapter(var equations: List<Equation>) :
 
     }
 
-    override fun getItemCount(): Int = equations.size
+    override fun getItemCount(): Int = equationOlds.size
 
 }
