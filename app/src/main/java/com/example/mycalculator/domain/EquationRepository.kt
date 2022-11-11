@@ -1,12 +1,14 @@
 package com.example.mycalculator.domain
 
+import androidx.lifecycle.LiveData
+
 interface EquationRepository {
 
-    fun addChar(equation: Equation)
+    fun addChar(appendedChar: Char, cursorPosition: Int)
 
-    fun deleteChar(equation: Equation)
+    fun deleteChar(char: Char, cursorPosition: Int)
 
-    fun getEquation(): Equation
+    fun getEquation(): LiveData<Equation>
 
-    fun calculateResult(equation: Equation): String
+    fun calculateResult(equation: Equation)
 }
