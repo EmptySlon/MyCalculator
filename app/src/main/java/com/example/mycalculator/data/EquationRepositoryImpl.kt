@@ -1,5 +1,6 @@
 package com.example.mycalculator.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mycalculator.domain.Equation
@@ -10,11 +11,12 @@ import java.math.RoundingMode
 object EquationRepositoryImpl : EquationRepository {
 
     private val equationLD = MutableLiveData<Equation>()
-    private val equation: Equation = Equation("", false)
+    private var equation: Equation = Equation("", false)
 
     override fun addChar(appendedChar: Char, cursorPosition: Int) {
         var equationValue = equation.equation
-        val correctedPosition = getPositionDifference(equationValue, cursorPosition)
+        var correctedPosition = if (cursorPosition == 0) equation.equation.length else cursorPosition
+        correctedPosition = getPositionDifference(equationValue, correctedPosition)
         val lastChar =
             when {
                 equationValue.isBlank() -> ""
@@ -38,15 +40,17 @@ object EquationRepositoryImpl : EquationRepository {
                 equationValue.lastIndex + 1
             ) + appendedChar + equationValue.drop(correctedPosition)
         equation.equation = equationValue
+        calculateResult()
         updateEquationLD()
 
     }
 
-    override fun deleteChar(char: Char, cursorPosition: Int) {
+    override fun deleteChar(cursorPosition: Int) {
         var equationValue = equation.equation
         val correctedPosition = getPositionDifference(equationValue, cursorPosition)
         equationValue = equationValue.removeRange(correctedPosition - 1, correctedPosition)
         equation.equation = equationValue
+        calculateResult()
         updateEquationLD()
     }
 
@@ -55,7 +59,7 @@ object EquationRepositoryImpl : EquationRepository {
     }
 
 
-    override fun calculateResult(equation: Equation) {
+    override fun calculateResult() {
         val answer: String
         var tempEquation = equation.equation
         equation.isCorrectEquation = (tempEquation.count { it == '(' } == tempEquation.count { it == ')' })
@@ -72,19 +76,25 @@ object EquationRepositoryImpl : EquationRepository {
             }
             answer = simpleCalculate(tempEquation)
             equation.answer = answer
-            updateEquationLD()
+            Log.d("MyTag", equation.answer)
         } catch (e: Exception) {
             equation.isCorrectEquation = false
             equation.answer = "NaN"
-            updateEquationLD()
+            Log.d("MyTag", equation.answer)
         }
 
     }
 
+    override fun deleteEquation() {
+        equation = Equation("", false)
+        updateEquationLD()
+    }
+
 
     private fun updateEquationLD() {
+
         equationLD.value = equation.copy()
-    }
+            }
 
 
     private fun addSpaceToString(equationValue: String): String {
