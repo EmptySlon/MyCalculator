@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycalculator.databinding.ActivityMainBinding
+import com.example.mycalculator.domain.Equation
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,11 +54,15 @@ class MainActivity : AppCompatActivity() {
             txCalculation.setOnClickListener {
                 txCalculation.isCursorVisible = true
             }
+
+
         }
 
         equationViewModel.equation.observe(this) {
-            updateTextView()
+            updateTextView(it)
         }
+
+
     }
 
     private fun deleteCharToEquation() {
@@ -66,11 +71,10 @@ class MainActivity : AppCompatActivity() {
         binding.txCalculation.setSelection(cursorPosition - 1)
     }
 
-    private fun updateTextView() {
+    private fun updateTextView(equation: Equation) {
         with(binding) {
             val cursorPosition = txCalculation.selectionEnd
-            val equationText = equationViewModel.equation.value?.equation
-                ?: throw (RuntimeException("missing equation in equationViewModel"))
+            val equationText = equation.equation
             txCalculation.setText(equationText)
             txCalculation.isCursorVisible = cursorPosition + 1 != equationText.length
             if (txAnswer.visibility != View.VISIBLE) txAnswer.visibility = View.VISIBLE
