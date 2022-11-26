@@ -68,6 +68,10 @@ class EquationViewModel: ViewModel() {
         updateCursorVisibility()
     }
 
+    fun enableVisibilityOfCursor(){
+        _visibleCursor.value = true
+    }
+
     private fun updateEquationValue() {
         _equationAnswer.value = equation.value?.answer
         _equationText.value = equation.value?.equation
