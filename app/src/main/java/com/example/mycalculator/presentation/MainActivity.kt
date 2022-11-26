@@ -1,11 +1,8 @@
 package com.example.mycalculator.presentation
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycalculator.databinding.ActivityMainBinding
@@ -13,7 +10,7 @@ import com.example.mycalculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private lateinit var equationViewModel: EquationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +20,59 @@ class MainActivity : AppCompatActivity() {
         binding.txCalculation.showSoftInputOnFocus = false
         equationViewModel = ViewModelProvider(this)[EquationViewModel::class.java]
 
+        setAddCharToEquationToButton()
+
+        with(binding)
+        {
+            btDelete.setOnLongClickListener {
+                equationViewModel.deleteEquation()
+                true
+            }
+            btDelete.setOnClickListener {
+                deleteCharToEquation()
+            }
+            txCalculation.setOnClickListener {
+                equationViewModel.enableVisibilityOfCursor()
+            }
+        }
+
+
+
+        equationViewModel.equationAnswer.observe(this) {
+            if (!it.isNullOrBlank()) binding.txAnswer.visibility = View.VISIBLE
+            else binding.txAnswer.visibility = View.GONE
+            binding.txAnswer.text = it
+        }
+
+        equationViewModel.equationText.observe(this) {
+            binding.txCalculation.setText(it)
+        }
+
+        equationViewModel.visibleCursor.observe(this) {
+            binding.txCalculation.isCursorVisible = it
+        }
+
+        equationViewModel.cursorPosition.observe(this) {
+            binding.txCalculation.setSelection(it)
+        }
+
+
+    }
+
+    private fun deleteCharToEquation() {
+        val cursorPosition = binding.txCalculation.selectionEnd
+        equationViewModel.deleteChar(cursorPosition)
+    }
+
+
+    private fun addCharToEquation(button: View) {
+        button as Button
+        val appendedChar = button.text.first()
+        val cursorPosition = binding.txCalculation.selectionEnd
+        equationViewModel.addChar(appendedChar, cursorPosition)
+    }
+
+    private fun setAddCharToEquationToButton() {
         with(binding)
         {
             bt0.setOnClickListener { addCharToEquation(it) }
@@ -42,48 +92,8 @@ class MainActivity : AppCompatActivity() {
             btSubtraction.setOnClickListener { addCharToEquation(it) }
             btLeftBracket.setOnClickListener { addCharToEquation(it) }
             btRightBracket.setOnClickListener { addCharToEquation(it) }
-            btDelete.setOnLongClickListener {
-                equationViewModel.deleteEquation()
-                txAnswer.visibility = View.GONE
-                true
-            }
-            btDelete.setOnClickListener {
-                deleteCharToEquation()
-            }
-            txCalculation.setOnClickListener {
-                txCalculation.isCursorVisible = true
-            }
+
         }
-
-        equationViewModel.equation.observe(this) {
-            updateTextView()
-        }
-    }
-
-    private fun deleteCharToEquation() {
-        val cursorPosition = binding.txCalculation.selectionEnd
-        equationViewModel.deleteChar(cursorPosition)
-        binding.txCalculation.setSelection(cursorPosition - 1)
-    }
-
-    private fun updateTextView() {
-        with(binding) {
-            val cursorPosition = txCalculation.selectionEnd
-            val equationText = equationViewModel.equation.value?.equation
-                ?: throw (RuntimeException("missing equation in equationViewModel"))
-            txCalculation.setText(equationText)
-            txCalculation.isCursorVisible = cursorPosition + 1 != equationText.length
-            if (txAnswer.visibility != View.VISIBLE) txAnswer.visibility = View.VISIBLE
-            txAnswer.text = equationViewModel.equation.value?.answer
-        }
-    }
-
-    private fun addCharToEquation(button: View) {
-        button as Button
-        val appendedChar = button.text.first()
-        val cursorPosition = binding.txCalculation.selectionEnd
-        equationViewModel.addChar(appendedChar, cursorPosition)
-        binding.txCalculation.setSelection(cursorPosition + 1)
     }
 }
 

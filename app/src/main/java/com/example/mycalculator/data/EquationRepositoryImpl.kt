@@ -15,7 +15,8 @@ object EquationRepositoryImpl : EquationRepository {
 
     override fun addChar(appendedChar: Char, cursorPosition: Int) {
         var equationValue = equation.equation
-        var correctedPosition = if (cursorPosition == 0) equation.equation.length else cursorPosition
+        var correctedPosition = cursorPosition
+//        var correctedPosition = if (cursorPosition == 0) equation.equation.length else cursorPosition
         correctedPosition = getPositionDifference(equationValue, correctedPosition)
         val lastChar =
             when {
@@ -47,6 +48,7 @@ object EquationRepositoryImpl : EquationRepository {
 
     override fun deleteChar(cursorPosition: Int) {
         var equationValue = equation.equation
+        if (cursorPosition == 0) return
         val correctedPosition = getPositionDifference(equationValue, cursorPosition)
         equationValue = equationValue.removeRange(correctedPosition - 1, correctedPosition)
         equation.equation = equationValue
@@ -58,11 +60,11 @@ object EquationRepositoryImpl : EquationRepository {
         return equationLD
     }
 
-
     override fun calculateResult() {
         val answer: String
         var tempEquation = equation.equation
-        equation.isCorrectEquation = (tempEquation.count { it == '(' } == tempEquation.count { it == ')' })
+        equation.isCorrectEquation =
+            (tempEquation.count { it == '(' } == tempEquation.count { it == ')' })
 
         try {
             while (tempEquation.contains(Regex("\\("))) {
@@ -82,7 +84,6 @@ object EquationRepositoryImpl : EquationRepository {
             equation.answer = "NaN"
             Log.d("MyTag", equation.answer)
         }
-
     }
 
     override fun deleteEquation() {
@@ -90,12 +91,9 @@ object EquationRepositoryImpl : EquationRepository {
         updateEquationLD()
     }
 
-
     private fun updateEquationLD() {
-
         equationLD.value = equation.copy()
-            }
-
+    }
 
     private fun addSpaceToString(equationValue: String): String {
         val listOldSubstring =
@@ -217,7 +215,8 @@ object EquationRepositoryImpl : EquationRepository {
             _str = _str.replace("$fistNumber+$lastNumber", calculateNumber)
             _str = checkCorrectSigns(_str)
         }
-        equation.isCorrectEquation = (equation.equation.count { it == '(' } == equation.equation.count { it == ')' })
+        equation.isCorrectEquation =
+            (equation.equation.count { it == '(' } == equation.equation.count { it == ')' })
         _str.toDouble()
 //        equation.answer = _str
         return _str
