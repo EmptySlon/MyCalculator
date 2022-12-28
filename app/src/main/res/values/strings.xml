@@ -19,4 +19,5 @@
     <string name="_0">0</string>
     <string name="point">.</string>
     <string name="equals">=</string>
+    <string name="equal_in_rv">%1$s =</string>
 </resources>

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycalculator.databinding.ActivityMainBinding
 
 
@@ -12,13 +13,25 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var equationViewModel: EquationViewModel
+    private lateinit var eqListViewModel: EquationListViewModel
+
+    lateinit var equationListAdapter: EquationRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val repository = EquationDataRepository
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
         equationViewModel = ViewModelProvider(this)[EquationViewModel::class.java]
+        eqListViewModel = ViewModelProvider(this)[EquationListViewModel::class.java]
+
+        setupRecycleView()
+
+        eqListViewModel.equationList.observe(this) {
+            equationListAdapter.equationList = it
+        }
+
 
         setAddCharToEquationToButton()
 
@@ -33,6 +46,12 @@ class MainActivity : AppCompatActivity() {
             }
             txCalculation.setOnClickListener {
                 equationViewModel.enableVisibilityOfCursor()
+            }
+            btEquals.setOnClickListener {
+                val equation = equationViewModel.equation.value
+                if (equation != null) {
+                    eqListViewModel.addEquationList(equation)
+                }
             }
         }
 
@@ -57,6 +76,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun setupRecycleView() {
+        val rvEquation = binding.listCalculation
+        rvEquation.layoutManager = LinearLayoutManager(this)
+        equationListAdapter = EquationRecyclerAdapter()
+        rvEquation.adapter = equationListAdapter
     }
 
     private fun deleteCharToEquation() {
