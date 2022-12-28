@@ -12,7 +12,7 @@ class EquationListDiffCallback (
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -20,4 +20,5 @@ class EquationListDiffCallback (
         val oldItem = oldList[oldItemPosition]
         return newItem == oldItem
     }
+
 }

@@ -40,7 +40,13 @@ class EquationViewModel: ViewModel() {
     fun addChar(appendedChar: Char, cursorPosition: Int){
         addCharUseCase.addChar(appendedChar, cursorPosition)
         updateEquationValue()
-        _cursorPosition.value = cursorPosition + 1
+////        TODO("Нужно исправить ошибру при вводе недопустимых символов")
+        if (_equationText.value!!.length > cursorPosition ) {
+            _cursorPosition.value = cursorPosition + 1
+        }
+
+//        _cursorPosition.value = cursorPosition + 1
+
         updateCursorVisibility()
     }
 
@@ -78,9 +84,7 @@ class EquationViewModel: ViewModel() {
     }
 
     private fun updateCursorVisibility() {
-        if ((equation.value?.equation?.length ?: 0) == (_cursorPosition.value ?: 0)) {
-            _visibleCursor.value = false
-        }
+        _visibleCursor.value = (equation.value?.equation?.length ?: 0) != (_cursorPosition.value ?: 0)
     }
 
 

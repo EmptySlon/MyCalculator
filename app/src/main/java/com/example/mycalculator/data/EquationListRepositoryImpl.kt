@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.mycalculator.domain.Equation
 import com.example.mycalculator.domain.EquationListRepository
 
-object EquationListRepositoryImpl: EquationListRepository {
+object EquationListRepositoryImpl : EquationListRepository {
 
     private val equationListLD = MutableLiveData<List<Equation>>()
     private val equationList = mutableListOf<Equation>()
@@ -15,8 +15,11 @@ object EquationListRepositoryImpl: EquationListRepository {
     }
 
     override fun addEquation(equation: Equation) {
-        equationList.add(equation)
-        updateList()
+
+        if (equationList.isEmpty() || (equationList.last() != equation) && equation.isCorrectEquation) {
+            equationList.add(equation)
+            updateList()
+        }
     }
 
     private fun updateList() {

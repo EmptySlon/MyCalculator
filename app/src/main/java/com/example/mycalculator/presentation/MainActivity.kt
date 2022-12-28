@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val repository = EquationDataRepository
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         eqListViewModel.equationList.observe(this) {
             equationListAdapter.equationList = it
         }
-
 
         setAddCharToEquationToButton()
 
