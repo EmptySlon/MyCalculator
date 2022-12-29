@@ -91,6 +91,11 @@ object EquationRepositoryImpl : EquationRepository {
         updateEquationLD()
     }
 
+    override fun setEquation(newEquation: Equation) {
+        equation = newEquation.copy()
+        updateEquationLD()
+    }
+
     private fun updateEquationLD() {
         equationLD.value = equation.copy()
     }

@@ -13,4 +13,6 @@ interface EquationRepository {
     fun calculateResult()
 
     fun deleteEquation()
+
+    fun setEquation(newEquation: Equation)
 }

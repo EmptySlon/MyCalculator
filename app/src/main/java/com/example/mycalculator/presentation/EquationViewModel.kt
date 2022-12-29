@@ -15,6 +15,7 @@ class EquationViewModel: ViewModel() {
     private val deleteCharUseCase = DeleteCharUseCase(repository)
     private val getEquationUseCase = GetEquationUseCase(repository)
     private val deleteEquationUseCase = DeleteEquationUseCase(repository)
+    private val setEquationUseCase = SetEquationUseCase(repository)
 
     val equation = getEquationUseCase.getEquation()
 
@@ -34,6 +35,13 @@ class EquationViewModel: ViewModel() {
     private  var  _visibleCursor = MutableLiveData<Boolean>()
     val visibleCursor: LiveData<Boolean>
         get() = _visibleCursor
+
+    fun setEquation(newEquation: Equation){
+        setEquationUseCase.setEquation(newEquation)
+        updateEquationValue()
+        _cursorPosition.value = newEquation.equation.length
+        updateCursorVisibility()
+    }
 
 
 

@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
                 val equation = equationViewModel.equation.value
                 if (equation != null) {
                     eqListViewModel.addEquationList(equation)
+//                    binding.listCalculation.scrollToPosition(equationListAdapter.equationList.size)
+                    binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1);
                 }
             }
         }
@@ -71,6 +73,12 @@ class MainActivity : AppCompatActivity() {
 
         equationViewModel.cursorPosition.observe(this) {
             binding.txCalculation.setSelection(it)
+        }
+
+        equationListAdapter.onEquationClickListener = {
+            equationViewModel.setEquation(it)
+
+
         }
 
 

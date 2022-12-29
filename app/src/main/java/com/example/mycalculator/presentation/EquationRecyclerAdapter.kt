@@ -30,7 +30,9 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
             field = value
         }
 
-    var onShopItemClickListener: ((Equation) -> Unit)? = null
+    var onEquationClickListener: ((Equation) -> Unit)? = null
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -45,7 +47,7 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
             txEquation.text = root.context.getString(R.string.equal_in_rv, equation.equation)
             txAnswer.text = equation.answer
             root.setOnClickListener {
-                onShopItemClickListener?.invoke(equation)
+                onEquationClickListener?.invoke(equation)
             }
         }
     }
