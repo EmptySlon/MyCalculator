@@ -7,19 +7,20 @@
     android:layout_height="match_parent"
     android:padding="5dp"
 
-    tools:context=".MainActivity"
+    tools:context=".presentation.MainActivity"
     >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listCalculation"
         android:layout_width="0dp"
         android:layout_height="0dp"
+
         app:layout_constraintBottom_toTopOf="@id/txAnswer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_equation"
-        />
+        tools:listitem="@layout/item_equation" />
 
     <TextView
         android:id="@+id/txAnswer"
@@ -38,26 +39,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listCalculation" />
 
-    <com.example.mycalculator.model.CustomEditText
+    <EditText
         android:id="@+id/txCalculation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:imeOptions="actionNone"
-
-        android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/edit_text_style"
-        android:inputType="none"
-        android:paddingStart="3dp"
 
+
+        android:background="@drawable/edit_text_style"
+        android:imeOptions="actionNone"
+        android:inputType="none"
+        android:minHeight="48dp"
+
+        android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:textIsSelectable="true"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/tlButtonBlock"
         app:layout_constraintEnd_toEndOf="@id/listCalculation"
-        app:layout_constraintStart_toStartOf="@id/listCalculation"
 
-        />
+        app:layout_constraintStart_toStartOf="@id/listCalculation" />
 
     <TableLayout
         android:id="@+id/tlButtonBlock"

@@ -20,6 +20,13 @@ class CustomEditText : AppCompatEditText {
         super.setText(text, type)
     }
 
+
+
+    override fun isFocused(): Boolean {
+
+        return super.isFocused()
+    }
+
     override fun setSelection(index: Int) {
 //        val positionDifference =
 //            text.toString()
