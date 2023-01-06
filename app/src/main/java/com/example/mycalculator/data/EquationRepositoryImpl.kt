@@ -13,33 +13,21 @@ object EquationRepositoryImpl : EquationRepository {
     private val equationLD = MutableLiveData<Equation>()
     private var equation: Equation = Equation("", false)
 
-    override fun addChar(appendedChar: Char, cursorPosition: Int) {
-        var equationValue = equation.equation
+    override fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String) {
+        var equationValue = textEquation
         var correctedPosition = cursorPosition
 //        var correctedPosition = if (cursorPosition == 0) equation.equation.length else cursorPosition
         correctedPosition = getPositionDifference(equationValue, correctedPosition)
-        val lastChar =
-            when {
-                equationValue.isBlank() -> ""
-                correctedPosition == 0 -> ""
-                else -> equationValue[correctedPosition - 1].toString()
-            }
-        when {
-            Regex("\\)").matches(lastChar) -> {
-                if (Regex("[\\d]").matches(appendedChar.toString())) return
-            }
-            Regex("\\(").matches(appendedChar.toString()) -> {
-                if (Regex("[\\d]").matches(lastChar)) return
-            }
-            Regex("[\\D]").matches(appendedChar.toString()) && appendedChar.toString() != "-" -> {
-                if (Regex("[\\D]").matches(lastChar)) return
-            }
-        }
         equationValue =
             equationValue.removeRange(
                 correctedPosition,
                 equationValue.lastIndex + 1
             ) + appendedChar + equationValue.drop(correctedPosition)
+        equationValue = equationValue.replace("xx", "x")
+        equationValue = equationValue.replace("++", "+")
+        equationValue = equationValue.replace("+--", "+-")
+        equationValue = equationValue.replace("---", "--")
+
         equation.equation = equationValue
         calculateResult()
         updateEquationLD()

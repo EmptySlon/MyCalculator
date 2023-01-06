@@ -45,13 +45,24 @@ class EquationViewModel: ViewModel() {
 
 
 
-    fun addChar(appendedChar: Char, cursorPosition: Int){
-        addCharUseCase.addChar(appendedChar, cursorPosition)
+    fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String){
+        addCharUseCase.addChar(appendedChar, cursorPosition, textEquation)
         updateEquationValue()
 ////        TODO("Нужно исправить ошибру при вводе недопустимых символов")
-        if (_equationText.value!!.length > cursorPosition ) {
-            _cursorPosition.value = cursorPosition + 1
+        when{
+            _equationText.value!!.length > textEquation.length -> {
+                _cursorPosition.value = cursorPosition + 1
+            }
+            _equationText.value!!.length > (cursorPosition + 1) -> {
+                _cursorPosition.value = cursorPosition
+            }
+            _equationText.value!!.length == textEquation.length -> {
+                _cursorPosition.value = _equationText.value!!.length
+            }
         }
+//        if (_equationText.value!!.length > textEquation.length ) {
+//            _cursorPosition.value = cursorPosition + 1
+//        }
 
 //        _cursorPosition.value = cursorPosition + 1
 

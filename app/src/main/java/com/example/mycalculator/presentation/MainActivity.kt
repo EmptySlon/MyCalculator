@@ -1,7 +1,10 @@
 package com.example.mycalculator.presentation
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MyLog", "onCreate" )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
@@ -77,12 +81,13 @@ class MainActivity : AppCompatActivity() {
 
         equationListAdapter.onEquationClickListener = {
             equationViewModel.setEquation(it)
-
-
         }
 
 
     }
+
+
+
 
     private fun setupRecycleView() {
         val rvEquation = binding.listCalculation
@@ -101,7 +106,8 @@ class MainActivity : AppCompatActivity() {
         button as Button
         val appendedChar = button.text.first()
         val cursorPosition = binding.txCalculation.selectionEnd
-        equationViewModel.addChar(appendedChar, cursorPosition)
+        val textEquation = binding.txCalculation.text.toString()
+        equationViewModel.addChar(appendedChar, cursorPosition, textEquation)
     }
 
     private fun setAddCharToEquationToButton() {

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 interface EquationRepository {
 
-    fun addChar(appendedChar: Char, cursorPosition: Int)
+    fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String)
 
     fun deleteChar(cursorPosition: Int)
 
