@@ -3,7 +3,6 @@ package com.example.mycalculator.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.mycalculator.data.EquationRepositoryImpl.equation
 import com.example.mycalculator.domain.Equation
 import com.example.mycalculator.domain.EquationRepository
 import java.math.BigDecimal

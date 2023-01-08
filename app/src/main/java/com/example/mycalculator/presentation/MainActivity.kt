@@ -1,7 +1,6 @@
 package com.example.mycalculator.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var equationViewModel: EquationViewModel
     private lateinit var eqListViewModel: EquationListViewModel
 
-    lateinit var equationListAdapter: EquationRecyclerAdapter
+    private lateinit var equationListAdapter: EquationRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 val equation = equationViewModel.equation.value
                 if (equation != null) {
                     eqListViewModel.addEquationList(equation)
-                    binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1);
+                    binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1)
                 }
             }
         }
