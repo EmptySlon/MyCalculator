@@ -2,6 +2,7 @@ package com.example.mycalculator.presentation
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -15,10 +16,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var equationViewModel: EquationViewModel
     private lateinit var eqListViewModel: EquationListViewModel
 
-    lateinit var equationListAdapter: EquationRecyclerAdapter
+    private lateinit var equationListAdapter: EquationRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
@@ -46,11 +49,11 @@ class MainActivity : AppCompatActivity() {
                 equationViewModel.enableVisibilityOfCursor()
             }
             btEquals.setOnClickListener {
+                equationViewModel.calculateResult()
                 val equation = equationViewModel.equation.value
                 if (equation != null) {
                     eqListViewModel.addEquationList(equation)
-//                    binding.listCalculation.scrollToPosition(equationListAdapter.equationList.size)
-                    binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1);
+                    binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1)
                 }
             }
         }
@@ -77,12 +80,13 @@ class MainActivity : AppCompatActivity() {
 
         equationListAdapter.onEquationClickListener = {
             equationViewModel.setEquation(it)
-
-
         }
 
 
     }
+
+
+
 
     private fun setupRecycleView() {
         val rvEquation = binding.listCalculation
@@ -101,7 +105,8 @@ class MainActivity : AppCompatActivity() {
         button as Button
         val appendedChar = button.text.first()
         val cursorPosition = binding.txCalculation.selectionEnd
-        equationViewModel.addChar(appendedChar, cursorPosition)
+        val textEquation = binding.txCalculation.text.toString()
+        equationViewModel.addChar(appendedChar, cursorPosition, textEquation)
     }
 
     private fun setAddCharToEquationToButton() {

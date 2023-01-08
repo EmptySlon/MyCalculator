@@ -28,7 +28,7 @@ class EquationViewModel: ViewModel() {
     val equationText: LiveData<String>
         get() = _equationText
 
-    private  var  _cursorPosition = MutableLiveData<Int>(0)
+    private  var  _cursorPosition = MutableLiveData(0)
     val cursorPosition: LiveData<Int>
         get() = _cursorPosition
 
@@ -43,18 +43,20 @@ class EquationViewModel: ViewModel() {
         updateCursorVisibility()
     }
 
-
-
-    fun addChar(appendedChar: Char, cursorPosition: Int){
-        addCharUseCase.addChar(appendedChar, cursorPosition)
+    fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String){
+        addCharUseCase.addChar(appendedChar, cursorPosition, textEquation)
         updateEquationValue()
-////        TODO("Нужно исправить ошибру при вводе недопустимых символов")
-        if (_equationText.value!!.length > cursorPosition ) {
-            _cursorPosition.value = cursorPosition + 1
+        when{
+            (_equationText.value?.length ?: 0) > textEquation.length -> {
+                _cursorPosition.value = cursorPosition + 1
+            }
+            (_equationText.value?.length ?: 0) > (cursorPosition + 1) -> {
+                _cursorPosition.value = cursorPosition
+            }
+            (_equationText.value?.length ?: 0) == textEquation.length -> {
+                _cursorPosition.value = _equationText.value?.length
+            }
         }
-
-//        _cursorPosition.value = cursorPosition + 1
-
         updateCursorVisibility()
     }
 
@@ -63,7 +65,6 @@ class EquationViewModel: ViewModel() {
 
     fun deleteChar(cursorPosition: Int){
         deleteCharUseCase.deleteChar(cursorPosition)
-
         updateEquationValue()
         if (cursorPosition > 0 )  _cursorPosition.value = cursorPosition - 1
         if (cursorPosition == 0 ) _visibleCursor.value = false
@@ -73,6 +74,8 @@ class EquationViewModel: ViewModel() {
 
     fun calculateResult(){
         calculateResultUseCase.calculateResult()
+        updateEquationValue()
+        _cursorPosition.value = _equationText.value?.length
     }
 
     fun deleteEquation() {
