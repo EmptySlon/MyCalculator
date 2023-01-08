@@ -3,6 +3,7 @@ package com.example.mycalculator.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.mycalculator.data.EquationRepositoryImpl.equation
 import com.example.mycalculator.domain.Equation
 import com.example.mycalculator.domain.EquationRepository
 import java.math.BigDecimal
@@ -16,7 +17,6 @@ object EquationRepositoryImpl : EquationRepository {
     override fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String) {
         var equationValue = textEquation
         var correctedPosition = cursorPosition
-//        var correctedPosition = if (cursorPosition == 0) equation.equation.length else cursorPosition
         correctedPosition = getPositionDifference(equationValue, correctedPosition)
         equationValue =
             equationValue.removeRange(
@@ -29,7 +29,7 @@ object EquationRepositoryImpl : EquationRepository {
         equationValue = equationValue.replace("---", "--")
 
         equation.equation = equationValue
-        calculateResult()
+        calculateEquation()
         updateEquationLD()
 
     }
@@ -40,7 +40,7 @@ object EquationRepositoryImpl : EquationRepository {
         val correctedPosition = getPositionDifference(equationValue, cursorPosition)
         equationValue = equationValue.removeRange(correctedPosition - 1, correctedPosition)
         equation.equation = equationValue
-        calculateResult()
+        calculateEquation()
         updateEquationLD()
     }
 
@@ -49,22 +49,35 @@ object EquationRepositoryImpl : EquationRepository {
     }
 
     override fun calculateResult() {
+        var equationValue = equation.equation
+
+        while (equationValue.count { it == '(' } != equationValue.count { it == ')' }) {
+            equationValue =
+                if (equationValue.count { it == '(' } < equationValue.count { it == ')' }) "($equationValue"
+                else "$equationValue)"
+        }
+        equation.equation = equationValue
+        calculateEquation()
+        updateEquationLD()
+    }
+
+
+    private fun calculateEquation() {
         val answer: String
-        var tempEquation = equation.equation
+        var equationValue = equation.equation
         equation.isCorrectEquation =
-            (tempEquation.count { it == '(' } == tempEquation.count { it == ')' })
+            (equationValue.count { it == '(' } == equationValue.count { it == ')' })
 
         try {
-            while (tempEquation.contains(Regex("\\("))) {
+            while (equationValue.contains(Regex("\\("))) {
                 val temporalEquation =
-                    tempEquation
-                        .dropLast(tempEquation.length - tempEquation.indexOf(')'))
+                    equationValue
+                        .dropLast(equationValue.length - equationValue.indexOf(')'))
                         .let { it.drop(it.lastIndexOf("(") + 1) }
                 val answerEquation = simpleCalculate(temporalEquation)
-                println("$temporalEquation = $answerEquation")
-                tempEquation = tempEquation.replace("(${temporalEquation})", answerEquation)
+                equationValue = equationValue.replace("(${temporalEquation})", answerEquation)
             }
-            answer = simpleCalculate(tempEquation)
+            answer = simpleCalculate(equationValue)
             equation.answer = answer
             Log.d("MyTag", equation.answer)
         } catch (e: Exception) {

@@ -1,10 +1,8 @@
 package com.example.mycalculator.presentation
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -50,10 +48,10 @@ class MainActivity : AppCompatActivity() {
                 equationViewModel.enableVisibilityOfCursor()
             }
             btEquals.setOnClickListener {
+                equationViewModel.calculateResult()
                 val equation = equationViewModel.equation.value
                 if (equation != null) {
                     eqListViewModel.addEquationList(equation)
-//                    binding.listCalculation.scrollToPosition(equationListAdapter.equationList.size)
                     binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1);
                 }
             }

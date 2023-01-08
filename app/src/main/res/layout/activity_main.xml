@@ -48,7 +48,8 @@
 
         android:background="@drawable/edit_text_style"
         android:imeOptions="actionNone"
-        android:inputType="textNoSuggestions"
+        android:inputType="textNoSuggestions|textMultiLine"
+        android:maxLines="3"
         android:minHeight="48dp"
 
         android:paddingStart="3dp"

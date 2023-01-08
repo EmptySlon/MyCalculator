@@ -16,14 +16,6 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
 
     var equationList = listOf<Equation>()
         set(value) {
-//
-//           if (equationList.isNotEmpty()) {
-//               val a = value.last() != equationList.last()
-//           }
-//            if (equationList.isNotEmpty() && value.last()== equationList.last()) {
-//                return
-//            }
-
             val callback = EquationListDiffCallback(equationList, value)
             val diffResult = DiffUtil.calculateDiff(callback)
             diffResult.dispatchUpdatesTo(this)
