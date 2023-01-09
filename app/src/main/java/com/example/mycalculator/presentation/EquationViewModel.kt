@@ -72,8 +72,8 @@ class EquationViewModel: ViewModel() {
 
     }
 
-    fun calculateResult(){
-        calculateResultUseCase.calculateResult()
+    fun calculateResult(textEquation: String){
+        calculateResultUseCase.calculateResult(textEquation)
         updateEquationValue()
         _cursorPosition.value = _equationText.value?.length
     }

@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                 equationViewModel.enableVisibilityOfCursor()
             }
             btEquals.setOnClickListener {
-                equationViewModel.calculateResult()
+                val textEquation = binding.txCalculation.text.toString()
+                equationViewModel.calculateResult(textEquation)
                 val equation = equationViewModel.equation.value
                 if (equation != null) {
                     eqListViewModel.addEquationList(equation)

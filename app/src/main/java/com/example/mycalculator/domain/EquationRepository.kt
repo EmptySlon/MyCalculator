@@ -10,7 +10,7 @@ interface EquationRepository {
 
     fun getEquation(): LiveData<Equation>
 
-    fun calculateResult()
+    fun calculateResult(textEquation: String)
 
     fun deleteEquation()
 

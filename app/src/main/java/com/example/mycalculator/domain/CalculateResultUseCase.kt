@@ -1,7 +1,7 @@
 package com.example.mycalculator.domain
 
 class CalculateResultUseCase(private val equationRepository: EquationRepository) {
-    fun calculateResult() {
-       return  equationRepository.calculateResult()
+    fun calculateResult(textEquation: String) {
+       return  equationRepository.calculateResult(textEquation)
     }
 }

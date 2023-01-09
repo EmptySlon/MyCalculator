@@ -47,8 +47,8 @@ object EquationRepositoryImpl : EquationRepository {
         return equationLD
     }
 
-    override fun calculateResult() {
-        var equationValue = equation.equation
+    override fun calculateResult(textEquation: String) {
+        var equationValue = textEquation
 
         while (equationValue.count { it == '(' } != equationValue.count { it == ')' }) {
             equationValue =
