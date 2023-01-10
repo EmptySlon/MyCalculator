@@ -23,6 +23,9 @@ object EquationRepositoryImpl : EquationRepository {
                 equationValue.lastIndex + 1
             ) + appendedChar + equationValue.drop(correctedPosition)
         equationValue = equationValue.replace("xx", "x")
+        equationValue = equationValue.replace("x+", "x")
+        equationValue = equationValue.replace("-+", "-")
+        equationValue = equationValue.replace("+x", "+")
         equationValue = equationValue.replace("++", "+")
         equationValue = equationValue.replace("+--", "+-")
         equationValue = equationValue.replace("---", "--")
