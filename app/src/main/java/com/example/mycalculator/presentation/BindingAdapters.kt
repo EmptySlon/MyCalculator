@@ -45,7 +45,3 @@ fun bindingSetOnClickListener(
     }
 }
 
-@BindingAdapter("textEquation")
-fun bindingTextEquation(txCalculation: EditText, textEquation: String ) {
-    txCalculation.setText(textEquation)
-}

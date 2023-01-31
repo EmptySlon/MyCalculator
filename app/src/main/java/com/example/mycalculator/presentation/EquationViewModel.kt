@@ -28,7 +28,7 @@ class EquationViewModel : ViewModel() {
     val equationText: LiveData<String>
         get() = _equationText
 
-    private var _cursorPosition = MutableLiveData(0)
+    private var _cursorPosition = MutableLiveData<Int>()
     val cursorPosition: LiveData<Int>
         get() = _cursorPosition
 

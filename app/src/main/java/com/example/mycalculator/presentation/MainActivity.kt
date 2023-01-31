@@ -12,10 +12,14 @@ import com.example.mycalculator.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var equationViewModel: EquationViewModel
-    private lateinit var eqListViewModel: EquationListViewModel
-
     private lateinit var equationListAdapter: EquationRecyclerAdapter
+
+    private val equationViewModel: EquationViewModel by lazy {
+        ViewModelProvider(this)[EquationViewModel::class.java]
+    }
+    private val eqListViewModel: EquationListViewModel by lazy {
+        ViewModelProvider(this)[EquationListViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
-        equationViewModel = ViewModelProvider(this)[EquationViewModel::class.java]
-        eqListViewModel = ViewModelProvider(this)[EquationListViewModel::class.java]
-
         binding.equationViewModel = equationViewModel
-
+        binding.lifecycleOwner = this
 
         setupRecycleView()
 
@@ -36,15 +37,6 @@ class MainActivity : AppCompatActivity() {
             equationListAdapter.equationList = it
         }
 
-
-
-
-//        binding.btDelete.setOnClickListener {
-//            deleteCharToEquation()
-//        }
-//        binding.txCalculation.setOnClickListener {
-//            equationViewModel.enableVisibilityOfCursor()
-//        }
         binding.btEquals.setOnClickListener {
             val textEquation = binding.txCalculation.text.toString()
             equationViewModel.calculateResult(textEquation)
@@ -55,34 +47,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-
         equationViewModel.equationAnswer.observe(this) {
             if (!it.isNullOrBlank()) binding.txAnswer.visibility = View.VISIBLE
             else binding.txAnswer.visibility = View.GONE
             binding.txAnswer.text = it
-        }
-//        TODO ошибка при переносе equationText в xml
-        equationViewModel.equationText.observe(this) {
-            binding.txCalculation.setText(it)
-        }
-
-        equationViewModel.visibleCursor.observe(this) {
-            binding.txCalculation.isCursorVisible = it
-        }
-
-        equationViewModel.cursorPosition.observe(this) {
-            binding.txCalculation.setSelection(it)
         }
 
         equationListAdapter.onEquationClickListener = {
             equationViewModel.setEquation(it)
         }
 
-
     }
-
 
     private fun setupRecycleView() {
         val rvEquation = binding.listCalculation
@@ -90,13 +65,6 @@ class MainActivity : AppCompatActivity() {
         equationListAdapter = EquationRecyclerAdapter()
         rvEquation.adapter = equationListAdapter
     }
-
-//    private fun deleteCharToEquation() {
-//        val cursorPosition = binding.txCalculation.selectionEnd
-//        equationViewModel.deleteChar(cursorPosition)
-//    }
-
-
 
 }
 
