@@ -6,6 +6,11 @@
         <variable
             name="equationViewModel"
             type="com.example.mycalculator.presentation.EquationViewModel" />
+
+        <variable
+            name="eqListViewModel"
+            type="com.example.mycalculator.presentation.EquationListViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,19 +25,24 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listCalculation"
             android:layout_width="0dp"
+            app:setOnEquationClickListener="@{equationViewModel}"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/txAnswer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_equation" />
+            tools:listitem="@layout/item_equation"
+
+
+            />
 
         <TextView
             android:id="@+id/txAnswer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
+            equationAnswer="@{equationViewModel.equationAnswer}"
             android:background="@drawable/edit_text_style_red"
             android:gravity="end"
             android:paddingStart="3dp"
@@ -316,10 +326,15 @@
                     app:idTextCalculation="@{txCalculation}" />
 
                 <Button
+
                     android:id="@+id/btEquals"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
+                    app:eqListViewModel="@{eqListViewModel}"
+                    app:equationViewModel="@{equationViewModel}"
+                    app:idTextCalculation="@{txCalculation}"
+                    app:idListCalculation="@{listCalculation}"
                     android:text="@string/equals"
                     android:textSize="30sp" />
             </TableRow>

@@ -1,7 +1,6 @@
 package com.example.mycalculator.presentation
 
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -24,39 +23,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
-        binding.equationViewModel = equationViewModel
-        binding.lifecycleOwner = this
 
+        setDataToBinding()
         setupRecycleView()
 
         eqListViewModel.equationList.observe(this) {
             equationListAdapter.equationList = it
         }
 
-        binding.btEquals.setOnClickListener {
-            val textEquation = binding.txCalculation.text.toString()
-            equationViewModel.calculateResult(textEquation)
-            val equation = equationViewModel.equation.value
-            if (equation != null) {
-                eqListViewModel.addEquationList(equation)
-                binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1)
-            }
-        }
+    }
 
-        equationViewModel.equationAnswer.observe(this) {
-            if (!it.isNullOrBlank()) binding.txAnswer.visibility = View.VISIBLE
-            else binding.txAnswer.visibility = View.GONE
-            binding.txAnswer.text = it
-        }
-
-        equationListAdapter.onEquationClickListener = {
-            equationViewModel.setEquation(it)
-        }
-
+    private fun setDataToBinding() {
+        binding.equationViewModel = equationViewModel
+        binding.eqListViewModel = eqListViewModel
+        binding.lifecycleOwner = this
     }
 
     private fun setupRecycleView() {
