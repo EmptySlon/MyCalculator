@@ -1,9 +1,7 @@
 package com.example.mycalculator.presentation
 
 import android.os.Bundle
-import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,81 +11,36 @@ import com.example.mycalculator.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var equationViewModel: EquationViewModel
-    private lateinit var eqListViewModel: EquationListViewModel
-
     private lateinit var equationListAdapter: EquationRecyclerAdapter
+
+    private val equationViewModel: EquationViewModel by lazy {
+        ViewModelProvider(this)[EquationViewModel::class.java]
+    }
+    private val eqListViewModel: EquationListViewModel by lazy {
+        ViewModelProvider(this)[EquationListViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.txCalculation.showSoftInputOnFocus = false
-        equationViewModel = ViewModelProvider(this)[EquationViewModel::class.java]
-        eqListViewModel = ViewModelProvider(this)[EquationListViewModel::class.java]
 
+        setDataToBinding()
         setupRecycleView()
 
         eqListViewModel.equationList.observe(this) {
             equationListAdapter.equationList = it
         }
 
-        setAddCharToEquationToButton()
-
-        with(binding)
-        {
-            btDelete.setOnLongClickListener {
-                equationViewModel.deleteEquation()
-                true
-            }
-            btDelete.setOnClickListener {
-                deleteCharToEquation()
-            }
-            txCalculation.setOnClickListener {
-                equationViewModel.enableVisibilityOfCursor()
-            }
-            btEquals.setOnClickListener {
-                val textEquation = binding.txCalculation.text.toString()
-                equationViewModel.calculateResult(textEquation)
-                val equation = equationViewModel.equation.value
-                if (equation != null) {
-                    eqListViewModel.addEquationList(equation)
-                    binding.listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1)
-                }
-            }
-        }
-
-
-
-        equationViewModel.equationAnswer.observe(this) {
-            if (!it.isNullOrBlank()) binding.txAnswer.visibility = View.VISIBLE
-            else binding.txAnswer.visibility = View.GONE
-            binding.txAnswer.text = it
-        }
-
-        equationViewModel.equationText.observe(this) {
-            binding.txCalculation.setText(it)
-        }
-
-        equationViewModel.visibleCursor.observe(this) {
-            binding.txCalculation.isCursorVisible = it
-        }
-
-        equationViewModel.cursorPosition.observe(this) {
-            binding.txCalculation.setSelection(it)
-        }
-
-        equationListAdapter.onEquationClickListener = {
-            equationViewModel.setEquation(it)
-        }
-
-
     }
 
-
-
+    private fun setDataToBinding() {
+        binding.equationViewModel = equationViewModel
+        binding.eqListViewModel = eqListViewModel
+        binding.lifecycleOwner = this
+    }
 
     private fun setupRecycleView() {
         val rvEquation = binding.listCalculation
@@ -96,43 +49,6 @@ class MainActivity : AppCompatActivity() {
         rvEquation.adapter = equationListAdapter
     }
 
-    private fun deleteCharToEquation() {
-        val cursorPosition = binding.txCalculation.selectionEnd
-        equationViewModel.deleteChar(cursorPosition)
-    }
-
-
-    private fun addCharToEquation(button: View) {
-        button as Button
-        val appendedChar = button.text.first()
-        val cursorPosition = binding.txCalculation.selectionEnd
-        val textEquation = binding.txCalculation.text.toString()
-        equationViewModel.addChar(appendedChar, cursorPosition, textEquation)
-    }
-
-    private fun setAddCharToEquationToButton() {
-        with(binding)
-        {
-            bt0.setOnClickListener { addCharToEquation(it) }
-            bt1.setOnClickListener { addCharToEquation(it) }
-            bt2.setOnClickListener { addCharToEquation(it) }
-            bt3.setOnClickListener { addCharToEquation(it) }
-            bt4.setOnClickListener { addCharToEquation(it) }
-            bt5.setOnClickListener { addCharToEquation(it) }
-            bt6.setOnClickListener { addCharToEquation(it) }
-            bt7.setOnClickListener { addCharToEquation(it) }
-            bt8.setOnClickListener { addCharToEquation(it) }
-            bt9.setOnClickListener { addCharToEquation(it) }
-            btComma.setOnClickListener { addCharToEquation(it) }
-            btAdd.setOnClickListener { addCharToEquation(it) }
-            btDivision.setOnClickListener { addCharToEquation(it) }
-            btMultiplication.setOnClickListener { addCharToEquation(it) }
-            btSubtraction.setOnClickListener { addCharToEquation(it) }
-            btLeftBracket.setOnClickListener { addCharToEquation(it) }
-            btRightBracket.setOnClickListener { addCharToEquation(it) }
-
-        }
-    }
 }
 
 

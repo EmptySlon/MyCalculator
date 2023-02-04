@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="end"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="equation"
+            type="com.example.mycalculator.domain.Equation" />
+    </data>
 
-    <TextView
-        android:id="@+id/txEquation"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:padding="3dp"
-        android:background="@drawable/edit_text_style"
-        android:textAlignment="viewEnd"
-        tools:text="100"
-        />
+        android:gravity="end">
 
-    <TextView
-        android:id="@+id/txAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/edit_text_style_red"
-        android:gravity="start"
-        android:padding="3dp"
-        android:textSize="17sp"
-        tools:text="80000" />
+        <TextView
+            android:id="@+id/txEquation"
+            app:txAnswer="@{equation.equation}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_style"
+            android:padding="3dp"
+            android:textAlignment="viewEnd"
+            android:textSize="17sp"
+            tools:text="100" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txAnswer"
+            android:text="@{equation.answer}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/edit_text_style_red"
+            android:gravity="start"
+            android:padding="3dp"
+            android:textSize="17sp"
+            tools:text="80000" />
+
+    </LinearLayout>
+</layout>

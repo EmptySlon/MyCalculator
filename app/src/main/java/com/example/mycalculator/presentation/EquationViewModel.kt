@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.mycalculator.data.EquationRepositoryImpl
 import com.example.mycalculator.domain.*
 
-class EquationViewModel: ViewModel() {
+class EquationViewModel : ViewModel() {
 
     private val repository = EquationRepositoryImpl
 
@@ -20,33 +20,33 @@ class EquationViewModel: ViewModel() {
     val equation = getEquationUseCase.getEquation()
 
 
-    private  var  _equationAnswer = MutableLiveData<String>()
+    private var _equationAnswer = MutableLiveData<String>()
     val equationAnswer: LiveData<String>
-    get() = _equationAnswer
+        get() = _equationAnswer
 
-    private  var  _equationText = MutableLiveData<String>()
+    private var _equationText = MutableLiveData<String>()
     val equationText: LiveData<String>
         get() = _equationText
 
-    private  var  _cursorPosition = MutableLiveData(0)
+    private var _cursorPosition = MutableLiveData<Int>()
     val cursorPosition: LiveData<Int>
         get() = _cursorPosition
 
-    private  var  _visibleCursor = MutableLiveData<Boolean>()
+    private var _visibleCursor = MutableLiveData<Boolean>()
     val visibleCursor: LiveData<Boolean>
         get() = _visibleCursor
 
-    fun setEquation(newEquation: Equation){
+    fun setEquation(newEquation: Equation) {
         setEquationUseCase.setEquation(newEquation)
         updateEquationValue()
         _cursorPosition.value = newEquation.equation.length
         updateCursorVisibility()
     }
 
-    fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String){
+    fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String) {
         addCharUseCase.addChar(appendedChar, cursorPosition, textEquation)
         updateEquationValue()
-        when{
+        when {
             (_equationText.value?.length ?: 0) > textEquation.length -> {
                 _cursorPosition.value = cursorPosition + 1
             }
@@ -61,18 +61,16 @@ class EquationViewModel: ViewModel() {
     }
 
 
-
-
-    fun deleteChar(cursorPosition: Int){
+    fun deleteChar(cursorPosition: Int) {
         deleteCharUseCase.deleteChar(cursorPosition)
         updateEquationValue()
-        if (cursorPosition > 0 )  _cursorPosition.value = cursorPosition - 1
-        if (cursorPosition == 0 ) _visibleCursor.value = false
+        if (cursorPosition > 0) _cursorPosition.value = cursorPosition - 1
+        if (cursorPosition == 0) _visibleCursor.value = false
         updateCursorVisibility()
 
     }
 
-    fun calculateResult(textEquation: String){
+    fun calculateResult(textEquation: String) {
         calculateResultUseCase.calculateResult(textEquation)
         updateEquationValue()
         _cursorPosition.value = _equationText.value?.length
@@ -85,7 +83,7 @@ class EquationViewModel: ViewModel() {
         updateCursorVisibility()
     }
 
-    fun enableVisibilityOfCursor(){
+    fun enableVisibilityOfCursor() {
         _visibleCursor.value = true
     }
 
@@ -95,7 +93,8 @@ class EquationViewModel: ViewModel() {
     }
 
     private fun updateCursorVisibility() {
-        _visibleCursor.value = (equation.value?.equation?.length ?: 0) != (_cursorPosition.value ?: 0)
+        _visibleCursor.value =
+            (equation.value?.equation?.length ?: 0) != (_cursorPosition.value ?: 0)
     }
 
 
