@@ -8,7 +8,7 @@ import com.example.mycalculator.domain.EquationRepository
 object EquationRepositoryImpl : EquationRepository {
 
     private val equationLD = MutableLiveData<Equation>()
-    private var equation: Equation = Equation("", false)
+    private var equation: Equation = Equation()
 
     override fun addChar(appendedChar: Char, cursorPosition: Int, textEquation: String) {
         var equationValue = textEquation
@@ -17,17 +17,24 @@ object EquationRepositoryImpl : EquationRepository {
                 cursorPosition,
                 equationValue.lastIndex + 1
             ) + appendedChar + equationValue.drop(cursorPosition)
-        equationValue = equationValue.replace("xx", "x")
-        equationValue = equationValue.replace("x+", "x")
-        equationValue = equationValue.replace("-+", "-")
-        equationValue = equationValue.replace("+x", "+")
-        equationValue = equationValue.replace("++", "+")
-        equationValue = equationValue.replace("+--", "+-")
-        equationValue = equationValue.replace("---", "--")
+
+        equationValue = checkForDuplicateChar(equationValue)
 
         equation.equation = equationValue
         updateEquationLD()
 
+    }
+
+    private fun checkForDuplicateChar(equationValue: String): String {
+        var equationValue1 = equationValue
+        equationValue1 = equationValue1.replace("xx", "x")
+        equationValue1 = equationValue1.replace("x+", "x")
+        equationValue1 = equationValue1.replace("-+", "-")
+        equationValue1 = equationValue1.replace("+x", "+")
+        equationValue1 = equationValue1.replace("++", "+")
+        equationValue1 = equationValue1.replace("+--", "+-")
+        equationValue1 = equationValue1.replace("---", "--")
+        return equationValue1
     }
 
     override fun deleteChar(cursorPosition: Int) {

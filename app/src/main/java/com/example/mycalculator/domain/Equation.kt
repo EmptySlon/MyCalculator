@@ -4,10 +4,10 @@ import java.lang.RuntimeException
 import java.util.*
 
 
-data class Equation(
-    private var _equation: String,
+class Equation(
+    _equation: String = "",
     var isCorrectEquation: Boolean = false,
-    private var _answer: String = "",
+//   _answer: String = "",
     var id: Int = INIT_ID
 ) {
 
@@ -19,7 +19,7 @@ data class Equation(
         set(value) {
             field = value
             isCorrectEquation = answer != WRONG_EQUATION
-            _equation = value
+
         }
 
 
@@ -27,17 +27,19 @@ data class Equation(
         set(value) {
             field = calculate(equation)
             isCorrectEquation = field != WRONG_EQUATION
-            _answer = field
+
         }
         get() {
-            val answer = calculate(equation)
-            _answer = answer
-            return answer
+            return calculate(equation)
         }
 
     init {
-        answer = _answer
+//        answer = _answer
         equation = _equation
+    }
+
+    fun copy(): Equation{
+        return Equation(equation,isCorrectEquation,id)
     }
 
 
