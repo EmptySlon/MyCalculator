@@ -74,17 +74,6 @@ object EquationRepositoryImpl : EquationRepository {
 
 
 
-
-    private fun deleteZeroFromEnd(str: String): String {
-        var count = 0
-        if (str == "0" || !str.contains('.')) return str
-        for (chr in str.reversed()) {
-            if (chr == '0') ++count
-            else break
-        }
-        return if (str.dropLast(count).last() == '.') str.dropLast(++count) else str.dropLast(count)
-    }
-
 }
 
 

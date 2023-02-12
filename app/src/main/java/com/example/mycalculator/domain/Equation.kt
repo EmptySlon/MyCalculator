@@ -18,7 +18,6 @@ data class Equation(
     var equation: String = ""
         set(value) {
             field = value
-//            answer = calculate(equation)
             isCorrectEquation = answer != WRONG_EQUATION
             _equation = value
         }
@@ -46,7 +45,8 @@ data class Equation(
         return try {
             val tokens = getTokens(expression)
             val postfix = toPostfix(tokens)
-            evalPostfix(postfix).toString()
+            val answer = evalPostfix(postfix).toString()
+            deleteZeroFromEnd(answer)
         } catch (e: RuntimeException) {
             WRONG_EQUATION
         }
@@ -136,6 +136,16 @@ data class Equation(
             "/" -> x / y
             else -> throw IllegalArgumentException("Invalid operator")
         }
+    }
+
+    private fun deleteZeroFromEnd(str: String): String {
+        var count = 0
+        if (str == "0" || !str.contains('.')) return str
+        for (chr in str.reversed()) {
+            if (chr == '0') ++count
+            else break
+        }
+        return if (str.dropLast(count).last() == '.') str.dropLast(++count) else str.dropLast(count)
     }
 
 }
