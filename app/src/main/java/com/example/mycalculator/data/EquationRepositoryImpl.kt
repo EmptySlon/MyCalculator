@@ -22,19 +22,6 @@ object EquationRepositoryImpl : EquationRepository {
 
         equation.equation = equationValue
         updateEquationLD()
-
-    }
-
-    private fun checkForDuplicateChar(equationValue: String): String {
-        var equationValue1 = equationValue
-        equationValue1 = equationValue1.replace("xx", "x")
-        equationValue1 = equationValue1.replace("x+", "x")
-        equationValue1 = equationValue1.replace("-+", "-")
-        equationValue1 = equationValue1.replace("+x", "+")
-        equationValue1 = equationValue1.replace("++", "+")
-        equationValue1 = equationValue1.replace("+--", "+-")
-        equationValue1 = equationValue1.replace("---", "--")
-        return equationValue1
     }
 
     override fun deleteChar(cursorPosition: Int) {
@@ -58,16 +45,14 @@ object EquationRepositoryImpl : EquationRepository {
                 else "$equationValue)"
         }
         equation.equation = equationValue
-
         updateEquationLD()
     }
-
-
 
     override fun deleteEquation() {
         equation = Equation("", false)
         updateEquationLD()
     }
+
 
     override fun setEquation(newEquation: Equation) {
         equation = newEquation.copy()
@@ -76,6 +61,18 @@ object EquationRepositoryImpl : EquationRepository {
 
     private fun updateEquationLD() {
         equationLD.value = equation.copy()
+    }
+
+    private fun checkForDuplicateChar(equationValue: String): String {
+        var equationValue1 = equationValue
+        equationValue1 = equationValue1.replace("xx", "x")
+        equationValue1 = equationValue1.replace("x+", "x")
+        equationValue1 = equationValue1.replace("-+", "-")
+        equationValue1 = equationValue1.replace("+x", "+")
+        equationValue1 = equationValue1.replace("++", "+")
+        equationValue1 = equationValue1.replace("+--", "+-")
+        equationValue1 = equationValue1.replace("---", "--")
+        return equationValue1
     }
 
 

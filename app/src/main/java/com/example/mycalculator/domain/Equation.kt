@@ -7,7 +7,6 @@ import java.util.*
 class Equation(
     _equation: String = "",
     var isCorrectEquation: Boolean = false,
-//   _answer: String = "",
     var id: Int = INIT_ID
 ) {
 
@@ -27,7 +26,6 @@ class Equation(
         set(value) {
             field = calculate(equation)
             isCorrectEquation = field != WRONG_EQUATION
-
         }
         get() {
             return calculate(equation)
