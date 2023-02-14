@@ -16,7 +16,7 @@ object EquationListRepositoryImpl : EquationListRepository {
 
     override fun addEquation(equation: Equation) {
 
-        if (equationList.isEmpty() || (equationList.last() != equation) && equation.isCorrectEquation) {
+        if (equationList.isEmpty() || (equationList.last().equation != equation.equation) && equation.isCorrectEquation) {
             equationList.add(equation)
             updateList()
         }
