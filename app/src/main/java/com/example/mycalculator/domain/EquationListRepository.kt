@@ -8,4 +8,6 @@ interface EquationListRepository {
 
     suspend fun addEquation(equation: Equation)
 
+    suspend fun deleteEquationFromDb(equationId: Int)
+
 }

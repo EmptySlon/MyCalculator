@@ -21,6 +21,9 @@ class EquationListRepositoryImpl(application: Application) : EquationListReposit
         equationListDao.addEquationItems(mapper.mapEntityToDbModel(equation.apply { id = 0 }))
     }
 
+    override suspend fun deleteEquationFromDb(equationId: Int) {
+        equationListDao.deleteEquationFromDb(equationId)
+    }
 
 
 }

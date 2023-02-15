@@ -22,6 +22,7 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
         }
 
     var onEquationClickListener: ((Equation) -> Unit)? = null
+    var onEquationLongClickListener: ((Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
@@ -34,6 +35,10 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
         holder.binding.equation = equation
         holder.binding.root.setOnClickListener {
             onEquationClickListener?.invoke(equation)
+        }
+        holder.binding.root.setOnLongClickListener {
+            onEquationLongClickListener?.invoke(equation.id)
+            true
         }
     }
 

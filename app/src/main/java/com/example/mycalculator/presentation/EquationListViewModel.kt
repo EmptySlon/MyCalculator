@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mycalculator.data.EquationListRepositoryImpl
 import com.example.mycalculator.domain.AddEquationUseCase
+import com.example.mycalculator.domain.DeleteEquationFromDbUseCase
 import com.example.mycalculator.domain.Equation
 import com.example.mycalculator.domain.GetEquationListUseCase
 import kotlinx.coroutines.launch
@@ -14,14 +15,22 @@ class EquationListViewModel(application: Application) : AndroidViewModel(applica
 
     private val getEquationListUseCase = GetEquationListUseCase(repository)
     private val addEquationListUseCase = AddEquationUseCase(repository)
+    private val deleteEquationFromDbUseCase = DeleteEquationFromDbUseCase(repository)
 
     val equationList = getEquationListUseCase.getEquationList()
 
 
     fun addEquationList(equation: Equation) {
-//        viewModelScope.launch { addEquationListUseCase.addEquation(equation) }
-        if (equationList.value?.last()?.equation != equation.equation && equation.isCorrectEquation) {
+        if (equationList.value?.lastOrNull()?.equation != equation.equation && equation.isCorrectEquation) {
             viewModelScope.launch { addEquationListUseCase.addEquation(equation) }
         }
     }
+
+    fun deleteEquationFromDb(equationId: Int) {
+        viewModelScope.launch {
+            deleteEquationFromDbUseCase.deleteEquationFromDb(equationId)
+        }
+    }
+
+
 }

@@ -15,9 +15,9 @@ interface EquationListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addEquationItems(equationItemDbModel: EquationDbModel)
 
-//    @Query("DELETE FROM equation_item WHERE id=:equationItemId")
-//    suspend fun deleteEquationItem(equationItemId: Int)
-//
+    @Query("DELETE FROM equation_item WHERE id=:equationId")
+    suspend fun deleteEquationFromDb(equationId: Int)
+
 //    @Query("SELECT * FROM equation_item WHERE id=:equation_item LIMIT 1")
 //    suspend fun getEquationItem(equationItemId: Int): EquationDbModel
 

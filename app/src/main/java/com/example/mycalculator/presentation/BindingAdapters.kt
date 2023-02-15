@@ -86,5 +86,16 @@ fun bindOnEquationClickListener(
     }
 }
 
+@BindingAdapter("setOnListCalculationLongClickListener")
+fun bindOnListCalculationLongClickListener(
+    listCalculation: RecyclerView,
+    eqListViewModel: EquationListViewModel
+) {
+    val adapter = listCalculation.adapter as EquationRecyclerAdapter
+    adapter.onEquationLongClickListener = {
+        eqListViewModel.deleteEquationFromDb(it)
+    }
+}
+
 
 
