@@ -54,7 +54,7 @@ fun bindingAddEquationList(
     eqListViewModel: EquationListViewModel,
     txCalculation: EditText,
     listCalculation: RecyclerView,
-    ) {
+) {
     button.setOnClickListener {
         val equationListAdapter = listCalculation.adapter
             ?: throw RuntimeException("equationListAdapter == null")
@@ -63,20 +63,23 @@ fun bindingAddEquationList(
         val equation = equationViewModel.equation.value
         if (equation != null) {
             eqListViewModel.addEquationList(equation)
-            listCalculation.smoothScrollToPosition(equationListAdapter.itemCount - 1)
+            listCalculation.smoothScrollToPosition(equationListAdapter.itemCount)
         }
     }
 }
 
 @BindingAdapter("equationAnswer")
-fun bindingEquationAnswer (txAnswer: TextView, equationAnswer: String?){
+fun bindingEquationAnswer(txAnswer: TextView, equationAnswer: String?) {
     if (!equationAnswer.isNullOrBlank()) txAnswer.visibility = View.VISIBLE
     else txAnswer.visibility = View.GONE
     txAnswer.text = equationAnswer
 }
 
 @BindingAdapter("setOnEquationClickListener")
-fun bindOnEquationClickListener (listCalculation: RecyclerView, equationViewModel: EquationViewModel) {
+fun bindOnEquationClickListener(
+    listCalculation: RecyclerView,
+    equationViewModel: EquationViewModel
+) {
     val adapter = listCalculation.adapter as EquationRecyclerAdapter
     adapter.onEquationClickListener = {
         equationViewModel.setEquation(it)

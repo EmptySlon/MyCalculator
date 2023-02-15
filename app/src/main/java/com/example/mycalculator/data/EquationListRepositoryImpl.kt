@@ -1,30 +1,26 @@
 package com.example.mycalculator.data
 
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.example.mycalculator.domain.Equation
 import com.example.mycalculator.domain.EquationListRepository
 
-object EquationListRepositoryImpl : EquationListRepository {
+class EquationListRepositoryImpl(application: Application) : EquationListRepository {
 
-    private val equationListLD = MutableLiveData<List<Equation>>()
-    private val equationList = mutableListOf<Equation>()
+    private val equationListDao = AppDataBase.getInstance(application).EquationListDao()
+    private val mapper = EquationListMapper()
 
-    override fun getEquationList(): LiveData<List<Equation>> {
-        return equationListLD
-    }
 
-    override fun addEquation(equation: Equation) {
-
-        if (equationList.isEmpty() || (equationList.last().equation != equation.equation) && equation.isCorrectEquation) {
-            equationList.add(equation)
-            updateList()
+    override fun getEquationList(): LiveData<List<Equation>> =
+        Transformations.map(equationListDao.getEquationList()) {
+            mapper.mapListDbModelToListEntity(it)
         }
+
+    override suspend fun addEquation(equation: Equation) {
+        equationListDao.addEquationItems(mapper.mapEntityToDbModel(equation.apply { id = 0 }))
     }
 
-    private fun updateList() {
-        equationListLD.value = equationList.toList()
-    }
 
 
 }

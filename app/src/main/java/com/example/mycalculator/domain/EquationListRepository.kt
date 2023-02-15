@@ -6,6 +6,6 @@ interface EquationListRepository {
 
     fun getEquationList(): LiveData<List<Equation>>
 
-    fun addEquation(equation: Equation)
+    suspend fun addEquation(equation: Equation)
 
 }

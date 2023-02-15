@@ -20,4 +20,6 @@
     <string name="point">.</string>
     <string name="equals">=</string>
     <string name="equal_in_rv">%1$s =</string>
+    <string name="bt_delete">DELETE</string>
+    <string name="tx_equation">text equation</string>
 </resources>

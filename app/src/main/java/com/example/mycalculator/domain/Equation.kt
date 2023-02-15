@@ -1,19 +1,20 @@
 package com.example.mycalculator.domain
 
-import java.lang.RuntimeException
 import java.util.*
 
 
 class Equation(
     _equation: String = "",
     var isCorrectEquation: Boolean = false,
-    var id: Int = INIT_ID
+    var id: Int = INIT_ID,
+    var _answer: String = ""
 ) {
 
     companion object {
         const val WRONG_EQUATION = "NaN"
         const val INIT_ID = 0
     }
+
     var equation: String = ""
         set(value) {
             field = value
@@ -32,12 +33,12 @@ class Equation(
         }
 
     init {
-//        answer = _answer
+        answer = _answer
         equation = _equation
     }
 
-    fun copy(): Equation{
-        return Equation(equation,isCorrectEquation,id)
+    fun copy(): Equation {
+        return Equation(equation, isCorrectEquation, id)
     }
 
 
@@ -83,7 +84,10 @@ class Equation(
         for (token in tokens) {
             when (token) {
                 in "+-x/%" -> {
-                    while (stack.isNotEmpty() && stack.peek() != "(" && precedence(stack.peek()) >= precedence(token)) {
+                    while (stack.isNotEmpty() && stack.peek() != "(" && precedence(stack.peek()) >= precedence(
+                            token
+                        )
+                    ) {
                         result.add(stack.pop())
                     }
                     stack.push(token)

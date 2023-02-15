@@ -20,7 +20,7 @@ class EquationViewModel : ViewModel() {
     val equation = getEquationUseCase.getEquation()
 
 
-    private var _equationAnswer = MutableLiveData<String>()
+    private var _equationAnswer = MutableLiveData<String>(Equation.WRONG_EQUATION)
     val equationAnswer: LiveData<String>
         get() = _equationAnswer
 

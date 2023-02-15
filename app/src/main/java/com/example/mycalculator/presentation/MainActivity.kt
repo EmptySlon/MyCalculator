@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecycleView() {
         val rvEquation = binding.listCalculation
-        rvEquation.layoutManager = LinearLayoutManager(this)
+        rvEquation.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         equationListAdapter = EquationRecyclerAdapter()
         rvEquation.adapter = equationListAdapter
     }
