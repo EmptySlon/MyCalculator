@@ -1,4 +1,4 @@
-package com.example.mycalculator.data
+package com.example.mycalculator.data.dataBase
 
 import android.app.Application
 import androidx.room.Database

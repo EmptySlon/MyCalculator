@@ -1,10 +1,11 @@
-package com.example.mycalculator.presentation
+package com.example.mycalculator.presentation.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycalculator.data.EquationRepositoryImpl
 import com.example.mycalculator.domain.*
+import com.example.mycalculator.domain.useCaseEquation.*
 
 class EquationViewModel : ViewModel() {
 

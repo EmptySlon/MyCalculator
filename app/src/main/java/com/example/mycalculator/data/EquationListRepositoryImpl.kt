@@ -3,6 +3,8 @@ package com.example.mycalculator.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.example.mycalculator.data.dataBase.AppDataBase
+import com.example.mycalculator.data.dataBase.EquationListMapper
 import com.example.mycalculator.domain.Equation
 import com.example.mycalculator.domain.EquationListRepository
 

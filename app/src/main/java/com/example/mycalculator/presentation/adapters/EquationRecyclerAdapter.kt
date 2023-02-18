@@ -1,4 +1,4 @@
-package com.example.mycalculator.presentation
+package com.example.mycalculator.presentation.adapters
 
 
 import android.view.LayoutInflater

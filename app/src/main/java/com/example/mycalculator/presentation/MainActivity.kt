@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycalculator.databinding.ActivityMainBinding
+import com.example.mycalculator.presentation.adapters.EquationRecyclerAdapter
+import com.example.mycalculator.presentation.viewModel.EquationListViewModel
+import com.example.mycalculator.presentation.viewModel.EquationViewModel
 
 
 class MainActivity : AppCompatActivity() {

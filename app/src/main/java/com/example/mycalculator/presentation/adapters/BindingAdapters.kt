@@ -1,4 +1,4 @@
-package com.example.mycalculator.presentation
+package com.example.mycalculator.presentation.adapters
 
 import android.view.View
 import android.widget.Button
@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycalculator.R
+import com.example.mycalculator.presentation.viewModel.EquationListViewModel
+import com.example.mycalculator.presentation.viewModel.EquationViewModel
 
 @BindingAdapter("txAnswer")
 fun bindingTxAnswer(textView: TextView, answer: String) {

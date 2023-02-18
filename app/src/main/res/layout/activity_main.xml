@@ -5,11 +5,11 @@
 
         <variable
             name="equationViewModel"
-            type="com.example.mycalculator.presentation.EquationViewModel" />
+            type="com.example.mycalculator.presentation.viewModel.EquationViewModel" />
 
         <variable
             name="eqListViewModel"
-            type="com.example.mycalculator.presentation.EquationListViewModel" />
+            type="com.example.mycalculator.presentation.viewModel.EquationListViewModel" />
 
     </data>
 

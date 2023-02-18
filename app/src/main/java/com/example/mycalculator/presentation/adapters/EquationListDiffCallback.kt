@@ -1,4 +1,4 @@
-package com.example.mycalculator.presentation
+package com.example.mycalculator.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.mycalculator.domain.Equation

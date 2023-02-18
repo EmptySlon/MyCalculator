@@ -1,13 +1,13 @@
-package com.example.mycalculator.presentation
+package com.example.mycalculator.presentation.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mycalculator.data.EquationListRepositoryImpl
-import com.example.mycalculator.domain.AddEquationUseCase
-import com.example.mycalculator.domain.DeleteEquationFromDbUseCase
+import com.example.mycalculator.domain.useCaseDB.AddEquationUseCase
+import com.example.mycalculator.domain.useCaseDB.DeleteEquationFromDbUseCase
 import com.example.mycalculator.domain.Equation
-import com.example.mycalculator.domain.GetEquationListUseCase
+import com.example.mycalculator.domain.useCaseDB.GetEquationListUseCase
 import kotlinx.coroutines.launch
 
 class EquationListViewModel(application: Application) : AndroidViewModel(application) {
