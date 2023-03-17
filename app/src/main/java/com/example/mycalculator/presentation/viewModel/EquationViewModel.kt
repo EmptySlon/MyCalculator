@@ -1,15 +1,19 @@
 package com.example.mycalculator.presentation.viewModel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycalculator.data.EquationRepositoryImpl
+import com.example.mycalculator.data.SettingRepositoryImpl
 import com.example.mycalculator.domain.*
 import com.example.mycalculator.domain.useCaseEquation.*
 
-class EquationViewModel : ViewModel() {
+class EquationViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = EquationRepositoryImpl
+
 
     private val addCharUseCase = AddCharUseCase(repository)
     private val calculateResultUseCase = CalculateResultUseCase(repository)
@@ -17,6 +21,8 @@ class EquationViewModel : ViewModel() {
     private val getEquationUseCase = GetEquationUseCase(repository)
     private val deleteEquationUseCase = DeleteEquationUseCase(repository)
     private val setEquationUseCase = SetEquationUseCase(repository)
+
+
 
     val equation = getEquationUseCase.getEquation()
 
@@ -36,6 +42,10 @@ class EquationViewModel : ViewModel() {
     private var _visibleCursor = MutableLiveData<Boolean>()
     val visibleCursor: LiveData<Boolean>
         get() = _visibleCursor
+
+
+
+
 
     fun setEquation(newEquation: Equation) {
         setEquationUseCase.setEquation(newEquation)

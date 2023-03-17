@@ -3,10 +3,13 @@ package com.example.mycalculator.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycalculator.databinding.ItemEquationBinding
 import com.example.mycalculator.domain.Equation
+import com.example.mycalculator.domain.SettingApp
 
 
 class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyViewHolder>() {
@@ -21,6 +24,8 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
             field = value
         }
 
+    var settingApp = SettingApp()
+
     var onEquationClickListener: ((Equation) -> Unit)? = null
     var onEquationLongClickListener: ((Int) -> Unit)? = null
 
@@ -33,6 +38,7 @@ class EquationRecyclerAdapter : RecyclerView.Adapter<EquationRecyclerAdapter.MyV
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val equation = equationList[position]
         holder.binding.equation = equation
+        holder.binding.settingApp = settingApp
         holder.binding.root.setOnClickListener {
             onEquationClickListener?.invoke(equation)
         }

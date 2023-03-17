@@ -10,6 +10,9 @@
         <variable
             name="eqListViewModel"
             type="com.example.mycalculator.presentation.viewModel.EquationListViewModel" />
+        <variable
+            name="settingApp"
+            type="com.example.mycalculator.domain.SettingApp" />
 
     </data>
 
@@ -33,15 +36,17 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_equation"
-            />
+            tools:listitem="@layout/item_equation" />
 
         <TextView
             android:id="@+id/txAnswer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
-            equationAnswer="@{equationViewModel.equationAnswer}"
+            app:equationAnswer="@{equationViewModel.equationAnswer}"
+            app:settingApp="@{settingApp}"
+            tools:text="NAN"
+
             android:background="@drawable/edit_text_style_red"
             android:gravity="end"
             android:paddingStart="3dp"
@@ -67,12 +72,14 @@
             android:paddingStart="3dp"
             android:paddingEnd="3dp"
             android:text="@{equationViewModel.equationText}"
+
             android:selection="@{equationViewModel.cursorPosition}"
             android:textIsSelectable="true"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@id/tlButtonBlock"
             app:layout_constraintEnd_toEndOf="@id/listCalculation"
             app:layout_constraintStart_toStartOf="@id/listCalculation" />
+        <!--android:text="@{equationViewModel.equationText}"-->
 
         <TableLayout
             android:id="@+id/tlButtonBlock"

@@ -8,8 +8,10 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycalculator.R
+import com.example.mycalculator.domain.SettingApp
 import com.example.mycalculator.presentation.viewModel.EquationListViewModel
 import com.example.mycalculator.presentation.viewModel.EquationViewModel
+import com.example.mycalculator.presentation.viewModel.SettingViewModel
 
 @BindingAdapter("txAnswer")
 fun bindingTxAnswer(textView: TextView, answer: String) {
@@ -70,11 +72,22 @@ fun bindingAddEquationList(
     }
 }
 
-@BindingAdapter("equationAnswer")
-fun bindingEquationAnswer(txAnswer: TextView, equationAnswer: String?) {
+@BindingAdapter("equationAnswer", "settingApp")
+fun bindingEquationAnswer(txAnswer: TextView, equationAnswer: String?, settingApp: SettingApp?) {
+
     if (!equationAnswer.isNullOrBlank()) txAnswer.visibility = View.VISIBLE
     else txAnswer.visibility = View.GONE
-    txAnswer.text = equationAnswer
+
+    if (equationAnswer == null) txAnswer.text = equationAnswer
+    else {
+        val formattedType = "%." + (settingApp?.NumberAfterComma ?: 3) + "f"
+        var formattedEquation = String.format(formattedType, equationAnswer.toFloat())
+        while (formattedEquation.last() == '0'){
+            formattedEquation = formattedEquation.dropLast(1)
+        }
+        if (formattedEquation.last() == ',') formattedEquation = formattedEquation.dropLast(1)
+        txAnswer.setText(formattedEquation)
+    }
 }
 
 @BindingAdapter("setOnEquationClickListener")
