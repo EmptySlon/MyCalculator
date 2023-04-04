@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycalculator.R
-import com.example.mycalculator.domain.SettingApp
 import com.example.mycalculator.presentation.viewModel.EquationListViewModel
 import com.example.mycalculator.presentation.viewModel.EquationViewModel
 import com.example.mycalculator.presentation.viewModel.SettingViewModel
@@ -16,6 +15,7 @@ import com.example.mycalculator.presentation.viewModel.SettingViewModel
 @BindingAdapter("txAnswer")
 fun bindingTxAnswer(textView: TextView, answer: String) {
     textView.text = textView.context.getString(R.string.equal_in_rv, answer)
+
 }
 
 @BindingAdapter("addCharOnClickListener", "idTextCalculation")
@@ -73,21 +73,51 @@ fun bindingAddEquationList(
 }
 
 @BindingAdapter("equationAnswer", "settingApp")
-fun bindingEquationAnswer(txAnswer: TextView, equationAnswer: String?, settingApp: SettingApp?) {
+fun bindingEquationAnswer(
+    txAnswer: TextView,
+    equationAnswer: String?,
+    settingApp: SettingViewModel
+) {
 
     if (!equationAnswer.isNullOrBlank()) txAnswer.visibility = View.VISIBLE
     else txAnswer.visibility = View.GONE
 
-    if (equationAnswer == null) txAnswer.text = equationAnswer
-    else {
-        val formattedType = "%." + (settingApp?.NumberAfterComma ?: 3) + "f"
-        var formattedEquation = String.format(formattedType, equationAnswer.toFloat())
-        while (formattedEquation.last() == '0'){
-            formattedEquation = formattedEquation.dropLast(1)
+    when {
+        equationAnswer == null -> txAnswer.text = equationAnswer
+        equationAnswer == "NaN" -> txAnswer.setText(equationAnswer)
+        equationAnswer.toDouble().toInt() == 0 -> {
+//            txAnswer.text = equationAnswer
+            val lenghtStrformattedType =
+                if (equationAnswer.length <= 2) 0
+                else equationAnswer.length - 2
+            val formattedType = "%." + lenghtStrformattedType.toString() + "f"
+            txAnswer.text = String.format(formattedType, equationAnswer.toDouble())
+
         }
-        if (formattedEquation.last() == ',') formattedEquation = formattedEquation.dropLast(1)
-        txAnswer.setText(formattedEquation)
+
+        else -> {
+            val formattedType = "%." + (settingApp.settingApp.value?.NumberAfterComma ?: 3) + "f"
+            var formattedEquation = String.format(formattedType, equationAnswer.toDouble())
+            while (formattedEquation.last() == '0') {
+                formattedEquation = formattedEquation.dropLast(1)
+            }
+            if (formattedEquation.last() == ',') formattedEquation = formattedEquation.dropLast(1)
+            txAnswer.setText(formattedEquation)
+
+        }
+
     }
+//
+//    if (equationAnswer == null) txAnswer.text = equationAnswer
+//    else {
+//        val formattedType = "%." + (settingApp.settingApp.value?.NumberAfterComma ?: 3) + "f"
+//        var formattedEquation = String.format(formattedType, equationAnswer.toFloat())
+//        while (formattedEquation.last() == '0') {
+//            formattedEquation = formattedEquation.dropLast(1)
+//        }
+//        if (formattedEquation.last() == ',') formattedEquation = formattedEquation.dropLast(1)
+//        txAnswer.setText(formattedEquation)
+//    }
 }
 
 @BindingAdapter("setOnEquationClickListener")

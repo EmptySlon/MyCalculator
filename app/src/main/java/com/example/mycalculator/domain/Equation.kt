@@ -1,5 +1,7 @@
 package com.example.mycalculator.domain
 
+import java.math.BigDecimal
+import java.math.MathContext
 import java.util.*
 
 
@@ -46,7 +48,7 @@ class Equation(
         return try {
             val tokens = getTokens(expression)
             val postfix = toPostfix(tokens)
-            val answer = evalPostfix(postfix).toString()
+            val answer = evalPostfix(postfix).toPlainString()
             deleteZeroFromEnd(answer)
         } catch (e: RuntimeException) {
             WRONG_EQUATION
@@ -110,15 +112,16 @@ class Equation(
         return result
     }
 
-    private fun evalPostfix(postfix: List<String>): Double {
-        val stack = Stack<Double>()
+    private fun evalPostfix(postfix: List<String>): BigDecimal {
+        val stack = Stack<BigDecimal>()
         for (token in postfix) {
             if (token in "+-x/%") {
                 val y = stack.pop()
                 val x = stack.pop()
                 stack.push(eval(x, y, token))
             } else {
-                stack.push(token.toDouble())
+                stack.push(BigDecimal(token))
+
             }
         }
         return stack.pop()
@@ -132,12 +135,12 @@ class Equation(
         }
     }
 
-    private fun eval(x: Double, y: Double, op: String): Double {
+    private fun eval(x: BigDecimal, y: BigDecimal, op: String): BigDecimal {
         return when (op) {
-            "+" -> x + y
-            "-" -> x - y
-            "x" -> x * y
-            "/" -> x / y
+            "+" -> x.add(y)
+            "-" -> x.subtract(y)
+            "x" -> x.multiply(y)
+            "/" -> x.divide(y, MathContext.DECIMAL64)
             else -> throw IllegalArgumentException("Invalid operator")
         }
     }

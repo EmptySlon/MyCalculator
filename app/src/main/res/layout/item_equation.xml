@@ -6,7 +6,7 @@
             type="com.example.mycalculator.domain.Equation" />
         <variable
             name="settingApp"
-            type="com.example.mycalculator.domain.SettingApp" />
+            type="com.example.mycalculator.presentation.viewModel.SettingViewModel" />
 
 
     </data>

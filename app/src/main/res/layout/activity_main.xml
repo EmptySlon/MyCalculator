@@ -12,7 +12,7 @@
             type="com.example.mycalculator.presentation.viewModel.EquationListViewModel" />
         <variable
             name="settingApp"
-            type="com.example.mycalculator.domain.SettingApp" />
+            type="com.example.mycalculator.presentation.viewModel.SettingViewModel" />
 
     </data>
 

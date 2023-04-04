@@ -1,12 +1,10 @@
 package com.example.mycalculator.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mycalculator.data.preferences.PreferenceProvider
 import com.example.mycalculator.databinding.ActivityMainBinding
 import com.example.mycalculator.presentation.adapters.EquationRecyclerAdapter
 import com.example.mycalculator.presentation.viewModel.EquationListViewModel
@@ -44,20 +42,17 @@ class MainActivity : AppCompatActivity() {
             equationListAdapter.equationList = it
         }
         settingViewModel.settingApp.observe(this){
-            equationListAdapter.settingApp = it
-            binding.settingApp = it
+
 
 
         }
-        settingViewModel.changeNumberAfterComma()
-
-
 
     }
 
     private fun setDataToBinding() {
         binding.equationViewModel = equationViewModel
         binding.eqListViewModel = eqListViewModel
+        binding.settingApp = settingViewModel
         binding.lifecycleOwner = this
     }
 
@@ -65,7 +60,9 @@ class MainActivity : AppCompatActivity() {
         val rvEquation = binding.listCalculation
         rvEquation.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         equationListAdapter = EquationRecyclerAdapter()
+        equationListAdapter.settingApp = settingViewModel
         rvEquation.adapter = equationListAdapter
+
     }
 
 }
