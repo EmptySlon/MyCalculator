@@ -72,6 +72,7 @@ object EquationRepositoryImpl : EquationRepository {
         equationValue1 = equationValue1.replace("++", "+")
         equationValue1 = equationValue1.replace("+--", "+-")
         equationValue1 = equationValue1.replace("---", "--")
+        equationValue1 = equationValue1.replace(")(", ")+(")
         return equationValue1
     }
 
